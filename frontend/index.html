@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Car Rental Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">🚗</span>
+        <span>CarRent</span>
+    </div>
+
+    <nav class="nav-links">
+
+        <a href="#dashboard"
+           onclick="showSection('dashboard')">
+            Dashboard
+        </a>
+
+        <a href="#cars"
+           onclick="showSection('cars')">
+            Cars
+        </a>
+
+        <a href="#bookings"
+           onclick="showSection('bookings')">
+            Bookings
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN CONTAINER
+========================================================= -->
+
+<main class="container">
+
+
+    <!-- =====================================================
+         DASHBOARD
+    ====================================================== -->
+
+    <section id="dashboard"
+             class="page-section active">
+
+        <div class="hero">
+
+            <div>
+                <p class="eyebrow">
+                    CAR RENTAL MANAGEMENT
+                </p>
+
+                <h1>
+                    Manage your fleet
+                    <br>
+                    with ease.
+                </h1>
+
+                <p class="hero-text">
+                    View available cars, manage bookings,
+                    and keep track of your rental operations
+                    from one place.
+                </p>
+
+                <button class="primary-button"
+                        onclick="showSection('cars')">
+                    Browse Cars
+                </button>
+
+            </div>
+
+            <div class="hero-car">
+                🚘
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🚗
+                </div>
+
+                <div>
+                    <p>Total Cars</p>
+                    <h2 id="totalCars">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <p>Available Cars</p>
+                    <h2 id="availableCars">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🔑
+                </div>
+
+                <div>
+                    <p>Rented Cars</p>
+                    <h2 id="rentedCars">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📋
+                </div>
+
+                <div>
+                    <p>Total Bookings</p>
+                    <h2 id="totalBookings">0</h2>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Quick actions -->
+
+        <div class="section-header">
+
+            <div>
+                <p class="eyebrow">QUICK ACTIONS</p>
+
+                <h2>
+                    What would you like to do?
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <button class="action-card"
+                    onclick="showSection('cars')">
+
+                <span class="action-icon">
+                    🚗
+                </span>
+
+                <span>
+                    <strong>Browse Cars</strong>
+                    <small>View available vehicles</small>
+                </span>
+
+            </button>
+
+
+            <button class="action-card"
+                    onclick="showSection('bookings')">
+
+                <span class="action-icon">
+                    📋
+                </span>
+
+                <span>
+                    <strong>Manage Bookings</strong>
+                    <small>View rental bookings</small>
+                </span>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CARS
+    ====================================================== -->
+
+    <section id="cars"
+             class="page-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    OUR FLEET
+                </p>
+
+                <h2>
+                    Available Cars
+                </h2>
+
+                <p class="section-description">
+                    Find the right car for your journey.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Search/filter -->
+
+        <div class="filters">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                        type="text"
+                        id="carSearch"
+                        placeholder="Search by name, brand or model..."
+                        oninput="loadCars()">
+
+            </div>
+
+
+            <select id="categoryFilter"
+                    onchange="loadCars()">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                <option value="ECONOMY">
+                    Economy
+                </option>
+
+                <option value="COMPACT">
+                    Compact
+                </option>
+
+                <option value="SEDAN">
+                    Sedan
+                </option>
+
+                <option value="SUV">
+                    SUV
+                </option>
+
+                <option value="LUXURY">
+                    Luxury
+                </option>
+
+                <option value="SPORTS">
+                    Sports
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Cars -->
+
+        <div id="carsContainer"
+             class="cars-grid">
+
+            <div class="loading">
+                Loading cars...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         BOOKINGS
+    ====================================================== -->
+
+    <section id="bookings"
+             class="page-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    RENTALS
+                </p>
+
+                <h2>
+                    Manage Bookings
+                </h2>
+
+                <p class="section-description">
+                    Create and manage customer bookings.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Booking form -->
+
+        <div class="form-card">
+
+            <h3>
+                Create New Booking
+            </h3>
+
+            <form id="bookingForm"
+                  onsubmit="createBooking(event)">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Customer Name
+                        </label>
+
+                        <input
+                                type="text"
+                                id="customerName"
+                                placeholder="Enter customer name"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                                type="email"
+                                id="email"
+                                placeholder="customer@example.com"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone
+                        </label>
+
+                        <input
+                                type="tel"
+                                id="phone"
+                                placeholder="10 digit phone number"
+                                pattern="[0-9]{10}"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Driving Licence
+                        </label>
+
+                        <input
+                                type="text"
+                                id="drivingLicenceNumber"
+                                placeholder="Licence number"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Select Car
+                        </label>
+
+                        <select
+                                id="bookingCar"
+                                required>
+
+                            <option value="">
+                                Select a car
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Start Date
+                        </label>
+
+                        <input
+                                type="date"
+                                id="startDate"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            End Date
+                        </label>
+
+                        <input
+                                type="date"
+                                id="endDate"
+                                required>
+
+                    </div>
+
+                </div>
+
+
+                <div id="bookingMessage"
+                     class="form-message">
+                </div>
+
+
+                <button
+                        type="submit"
+                        class="primary-button">
+
+                    Create Booking
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Booking list -->
+
+        <div class="bookings-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        BOOKING HISTORY
+                    </p>
+
+                    <h2>
+                        Current Bookings
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div id="bookingsContainer">
+
+                <div class="loading">
+                    Loading bookings...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div id="toast"
+     class="toast">
+
+    <span id="toastMessage"></span>
+
+</div>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
